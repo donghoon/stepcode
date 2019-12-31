@@ -120,7 +120,10 @@ class SC_EDITOR_EXPORT STEPfile {
             return _fileNameW;
         }
         std::string SetFileName( const std::string name = "" );
+
+#if defined(_WIN32)
 		std::wstring SetFileNameW( const std::wstring name = L"" );
+#endif
         std::string TruncFileName( const std::string name ) const;
         float GetReadProgress() const;
         float GetWriteProgress() const;
@@ -148,7 +151,9 @@ class SC_EDITOR_EXPORT STEPfile {
 
 //Reading and Writing
         Severity ReadExchangeFile( const std::string filename = "", bool useTechCor = 1 );
+#if defined(_WIN32)
 		Severity ReadExchangeFileW( const std::wstring filename = L"", bool useTechCor = 1 );
+#endif
         Severity AppendExchangeFile( const std::string filename = "", bool useTechCor = 1 );
 
         Severity ReadWorkingFile( const std::string filename = "", bool useTechCor = 1 );
@@ -183,8 +188,9 @@ class SC_EDITOR_EXPORT STEPfile {
         std::string schemaName(); /**< Returns and copies out schema name from header instances.
                                              Called by ReadExchangeFile */
         istream * OpenInputFile( const std::string filename = "" );
-		 istream * OpenInputFileW( const std::wstring filename = L"" );
-
+#if defined(_WIN32)
+        istream * OpenInputFileW( const std::wstring filename = L"" );
+#endif
         void CloseInputFile( istream * in );
 
         Severity ReadHeader( istream & in );

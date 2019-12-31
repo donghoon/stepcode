@@ -56,7 +56,7 @@ std::string STEPfile::SetFileName( const std::string newName ) {
     return _fileName;
 }
 
-
+#if defined(_WIN32)
 std::wstring STEPfile::SetFileNameW( const std::wstring newName ) {
     //  if a newName is not given or is the same as the old, use the old name
     if( ( newName.empty() ) || ( newName == _fileNameW ) ) {
@@ -66,6 +66,7 @@ std::wstring STEPfile::SetFileNameW( const std::wstring newName ) {
     _fileNameW = DirObj::NormalizeW( newName );
     return _fileNameW;
 }
+#endif
 
 /** Returns read progress,scaled 0-100. Will return a value < 0 if
  * called *immediately* after read operation starts, if no file has
@@ -1761,7 +1762,7 @@ Severity STEPfile::AppendFile( istream * in, bool useTechCor ) {
     cout << "Finished reading file.\n\n";
     return SEVERITY_NULL;
 }
-
+#if defined(_WIN32)
 Severity STEPfile::AppendFileW( istream * in, bool useTechCor ) {
     Severity rval = SEVERITY_NULL;
     char errbuf[BUFSIZ];
@@ -1913,6 +1914,7 @@ Severity STEPfile::AppendFileW( istream * in, bool useTechCor ) {
     cout << "Finished reading file.\n\n";
     return SEVERITY_NULL;
 }
+#endif
 
 Severity STEPfile::WriteWorkingFile( ostream & out, int clearError, int writeComments ) {
     SetFileType( WORKING_SESSION );
